@@ -8,6 +8,20 @@
 
 	<h:body>
 		<ui:composition template="/estrutura.xhtml">
+			<script type="text/javascript">
+				function fucaoErro(data) {
+					
+				}
+
+				function funcaoEvento(data) {
+					var mensagem = "";
+					for (var i in data) {
+						mensagem += i + ": " + data[i] + "\n";
+					}
+					alert(mensagem);
+				}
+			</script>
+			
 			<ui:param name="titulo" value="Cadastro de Pessoas" />
 			<ui:define name="direita">
 				<h:messages infoClass="info" errorClass="erro" warnClass="warn" fatalClass="fatal" />
@@ -46,8 +60,10 @@
 					<f:facet name="header">Dados gerais</f:facet>
 					
 					<h:outputLabel value="Nome" for="nome" />
-					<h:inputText id="nome"
-						value="#{cadastroPessoasBean.pessoaSelecionada.nome}" />
+					<h:inputText id="nome" valueChangeListener="#{cadastroPessoasBean.ouvinteAjax}" 
+						value="#{cadastroPessoasBean.pessoaSelecionada.nome}"> 
+						<f:ajax event="keyup" immediate="true" listener="#{cadastroPessoasBean.ouvinteAjax}"/>
+					</h:inputText>
 					<h:message for="nome" />
 		
 					<h:outputLabel value="Email" for="email" />
@@ -55,8 +71,10 @@
 						value="#{cadastroPessoasBean.pessoaSelecionada.email}"
 						validatorMessage="Email inválido">
 						<f:validateRegex pattern=".+@.+" />
+						<f:ajax render="mensEmail :formTabela:tabela" execute="@this"
+							onerror="funcaoErro" onevent="funcaoEvento"/>					
 					</h:inputText>
-					<h:message for="email" styleClass="erro" />
+					<h:message id="mensEmail" for="email" styleClass="erro" />
 		
 					<h:outputLabel value="Telefone" for="telefone" />
 					<h:inputText id="telefone"
@@ -126,9 +144,9 @@
 					
 			</h:form>
 		
-			<h:form>
+			<h:form id="formTabela">
 				<h2>lista de pessoas cadastradas</h2>
-				<h:dataTable value="#{cadastroPessoasBean.lista}" var="p" rowClasses="linha1, linha2">
+				<h:dataTable id="tabela" value="#{cadastroPessoasBean.lista}" var="p" rowClasses="linha1, linha2">
 				
 					<esp:coluna nome="Nome" valor="#{p.nome}" escapar="true" informar="false"></esp:coluna>					
 					<esp:coluna nome="Email" valor="#{p.email}" escapar="true" informar="false"></esp:coluna>					
