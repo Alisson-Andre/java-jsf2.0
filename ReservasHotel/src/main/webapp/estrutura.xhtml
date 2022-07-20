@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<title>#{titulo}</title>
+		<style>
+			@import url("estilo.css");
+		</style>
+	</h:head>
+	
+	<h:body>
+		<div id="topo">
+			<h:graphicImage name="cabecalho.jpg" library="imagens" />
+			<h:form>
+				<ui:repeat var="l" value="#{geralBean.localesDisponiveis}">
+					<h:commandButton actionListener="#{geralBean.atualizarLocale}" value="#{l}" > 
+						<f:attribute name="locale" value="#{l}"></f:attribute>
+					</h:commandButton> 
+				</ui:repeat>
+			</h:form>
+		</div>
+		<div id="conteudo">
+			<div id="esquerda">
+				<ui:include src="/menu.xhtml" />
+			</div>
+			<div id="direita">
+				<ui:insert name="direita">O que vem do lado direito</ui:insert>
+			</div>
+			<div id="centro">
+				<ui:insert>O que vem no centro</ui:insert>
+			</div>
+		</div>
+		<div id="rodape">
+			<strong>Alisson Balbino</strong><br />
+			99706-9570
+		</div>
+		
+		<ui:debug />
+	</h:body>
+</html>
