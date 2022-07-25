@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/estrutura.xhtml">
+	<ui:param name="titulo" value="Exemplos PrimeFeces" />
+	<ui:define name="direita">
+		<p:growl showDetail="true" id="mensagens"></p:growl>
+	</ui:define>
+
+	<h:form prependId="false">
+		<p:tabView id="primefaces">
+			<p:tab title="Primeiros exemplos">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="nome" value="Nome: " />
+					<p:keyboard id="nome" />
+
+					<h:outputLabel for="senha" value="Senha:" />
+					<p:password id="senha" feedback="true" promptLabel="Digite a senha"
+						weakLabel="Senha fraca" strongLabel="Senha forte"
+						goodLabel="Senha razoável" />
+
+					<h:outputLabel for="data" value="Data: " />
+					<p:calendar id="data" value="#{primefacesBean.data}"
+						locale="#{geralBean.locale}" pages="2"
+						showOn="button" showOtherMonths="true" 
+						selectOtherMonths="true" showButtonPanel="true" >
+						
+						<p:ajax event="dateSelect" listener="#{primefacesBean.definirData}" update="mensagens" />
+						
+					</p:calendar>
+				</h:panelGrid>
+				<p:button value="Salvar" />
+			</p:tab>
+			
+			<p:tab title="Opnião">
+				<h:outputText value="Gostou do PrimeFaces?" />
+				<p:rating stars="5"/>
+			</p:tab>
+			
+		</p:tabView>
+		<p:resizable for="primefaces"/>
+		<p:draggable for="primefaces" opacity="0.6"/>
+	</h:form>
+</ui:composition>
+
+</html>

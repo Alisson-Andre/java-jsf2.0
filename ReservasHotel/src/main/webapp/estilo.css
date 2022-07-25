@@ -7,7 +7,6 @@ body, div {
 }
 
 body {
-	background-image: url(blackcat);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
@@ -83,46 +82,39 @@ img {
 }
 
 #centro {
-	margin-left: 240px;
+	margin-left: 250px;
 }
-
-
 
 #direita {
-	margin-right: 10px;
 	float: right;
-	width: 250px;
-
+	background-color: #DDE;
+	padding: 10px;
 }
 
-#direita > ul {
-	margin: 0;
-	padding: 0;
+#rodape {
+	background-color: #333;
+	color: #FFF;
+	height: 40px;
+	padding: 10px;
+	position: fixed;
+	bottom: 0;
 	width: 100%;
-	list-style: none;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#999), to(#333));
+	background-image: -moz-linear-gradient(top, #999, #333);
+	border-top: 1px solid #777;
+	text-shadow: 1px 1px 1px #000;
 }
 
-#direita > ul > li {
-	height: 20px;
-	padding: 5px;
-	background-color: #FEE;
+#conteudo > div {
+	margin-bottom: 50px;
 }
 
-
-#direita > ul > li > a {
-	text-decoration: none;
-	color: #000;
-	text-shadow: 1px 1px 1px #DDD;
+#escolhaIdiomas > table, #formTabela > table, #formDados > table, #formTipo > table {
+	width: 50%;
+	border: 1px dotted #000;
+	margin: 5px;
 }
 
-#direita > ul > li > a {
-	color: #555;
-}
-
-
-table {
-	width: 70%;
-}
 
 tr > th {
 	background-color: #DDD;
@@ -151,4 +143,9 @@ tr.linha2 > td {
 .fatal {
 	color: #F00;
 	font-weight: bold;
+}
+
+#primefaces {
+	position: absolute;
+	width: 70%;
 }
