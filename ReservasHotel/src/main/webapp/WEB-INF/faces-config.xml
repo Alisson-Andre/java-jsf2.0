@@ -32,4 +32,12 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>#{view.viewId}</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>

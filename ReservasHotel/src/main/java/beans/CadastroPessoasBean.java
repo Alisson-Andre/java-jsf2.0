@@ -1,26 +1,28 @@
 package beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Named;
 
 import modelo.Pessoa;
 import modelo.PessoaFisica;
 import modelo.PessoaJuridica;
 import modelo.Sexo;
 
-@ManagedBean
-@SessionScoped
-public class CadastroPessoasBean {
+@Named
+@ApplicationScoped
+public class CadastroPessoasBean implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Pessoa pessoaSelecionada;
 	private Collection<Pessoa> lista;
@@ -59,13 +61,15 @@ public class CadastroPessoasBean {
 		contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Preencha os dados abaixo:", ""));
 	}
 	
-	public void salvar() {
+	public String salvar() {
 		if (!lista.contains(pessoaSelecionada)) {
 			lista.add(pessoaSelecionada);
 		}
 		
 		FacesContext contexto = FacesContext.getCurrentInstance();
-		contexto.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Edição efetuada com sucesso", ""));
+		contexto.getExternalContext().getFlash().put("mensagem", new FacesMessage(FacesMessage.SEVERITY_INFO, "Edição efetuada com sucesso", ""));
+		
+		return "sucesso";
 	}
 	
 	public String cancelar() {

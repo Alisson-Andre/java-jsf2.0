@@ -8,23 +8,11 @@
 
 	<h:body>
 		<ui:composition template="/estrutura.xhtml">
-			<script type="text/javascript">
-				function fucaoErro(data) {
-					
-				}
-
-				function funcaoEvento(data) {
-					var mensagem = "";
-					for (var i in data) {
-						mensagem += i + ": " + data[i] + "\n";
-					}
-					alert(mensagem);
-				}
-			</script>
 			
 			<ui:param name="titulo" value="Cadastro de Pessoas" />
 			<ui:define name="direita">
 				<h:messages infoClass="info" errorClass="erro" warnClass="warn" fatalClass="fatal" />
+				#{flash.mensagem.summary}
 			</ui:define>
 			
 			<h1>Cadastro de Pessoas</h1>
