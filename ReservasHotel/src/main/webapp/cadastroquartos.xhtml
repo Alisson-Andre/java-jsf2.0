@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:esp="http://alisson.com.br/facelets/taglibs"
+	xmlns:espc="http://java.sun.com/jsf/composite/componentes">
+
+	<h:body>
+		<ui:composition template="/estrutura.xhtml">
+			<ui:param name="titulo" value="Cadastro de Quartos" />
+			<ui:define name="direita">
+				<h:messages infoClass="info" errorClass="erro" warnClass="warn" fatalClass="fatal" />
+			</ui:define>
+			
+			<h1>Cadastro de Quartos</h1>
+					
+			<h:form id="formDados">
+				<h:panelGrid columns="3">
+					<f:facet name="header">Dados do Quarto</f:facet>
+					
+					<h:outputLabel value="Numero: " for="numero" />
+					<h:inputText id="numero" value="#{cadastroQuartosBean.quartoAtual.numero}" />
+					<h:message for="numero"/>
+					
+					<h:outputLabel value="Tipo:" for="tipoQuarto"/>
+					<h:selectOneMenu value="#{cadastroQuartosBean.quartoAtual.tipoQuarto}" 
+						binding="#{cadastroQuartosBean.selectTipos}"/>
+					<h:message for="tipoQuarto"/>
+					
+				</h:panelGrid>
+				<h:commandButton action="#{cadastroQuartosBean.salvar()}" image="#{resource['imagens:salvar.png']}" />
+				<h:commandButton immediate="true" action="#{cadastroQuartosBean.cancelar}"  
+					image="#{resource['imagens:cancelar.png']}" />
+			</h:form>
+
+			<h:form id="formTabela">
+				<h2>lista de quartos cadastradas</h2>
+				<h:dataTable id="tabela" value="#{cadastroQuartosBean.listaQuarto}" var="q" rowClasses="linha1, linha2">
+				
+					<esp:coluna nome="Numero" valor="#{q.numero}" escapar="true" informar="false"></esp:coluna>					
+					<esp:coluna nome="TipoQuarto" valor="#{q.tipoQuarto}" escapar="true" informar="false"></esp:coluna>					
+						
+					<h:column>
+						<f:facet name="header">Ações</f:facet>
+						<espc:editarExcluir alvo="#{cadastroQuartosBean.quartoAtual}"
+							excluirListener="#{cadastroQuartosBean.excluir}"
+							objeto="#{q}">
+						</espc:editarExcluir>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</ui:composition>
+	</h:body>
+</html>

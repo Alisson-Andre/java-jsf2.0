@@ -18,7 +18,8 @@ public abstract class Pessoa implements Serializable {
 	private String telefone;
 	private String email;
 	private Endereco endereco;
-	private Collection<Reserva> reservas;	
+	private Collection<Reserva> reservas;
+	private Collection<DiariaAvulsa> diariasAvulsas;
 	
 	public Pessoa() {
 		super();
@@ -76,6 +77,15 @@ public abstract class Pessoa implements Serializable {
 
 	public void setReservas(Collection<Reserva> reservas) {
 		this.reservas = reservas;
+	}
+
+	@OneToMany(mappedBy = "cliente")
+	public Collection<DiariaAvulsa> getDiariasAvulsas() {
+		return diariasAvulsas;
+	}
+
+	public void setDiariasAvulsas(Collection<DiariaAvulsa> diariasAvulsas) {
+		this.diariasAvulsas = diariasAvulsas;
 	}
 
 }

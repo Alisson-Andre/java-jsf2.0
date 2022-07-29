@@ -15,6 +15,7 @@ public class Diaria implements Serializable {
 	private int codigo;
 	private Date data;
 	private Collection<PessoaFisica> hospedes;
+	private Quarto quarto;
 	
 	public Diaria() {
 		super();
@@ -50,4 +51,14 @@ public class Diaria implements Serializable {
 		this.hospedes = hospedes;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "quarto")
+	public Quarto getQuarto() {
+		return quarto;
+	}
+
+	public void setQuarto(Quarto quarto) {
+		this.quarto = quarto;
+	}
+	
 }
