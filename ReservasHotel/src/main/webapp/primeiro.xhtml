@@ -24,9 +24,13 @@
 				Usando a tag link 
 				<h:link outcome="cadastropessoas.jsf" value="Chamando o cadastros de pessoas"></h:link><br/>
 				
-				Usando um campo solto
-				<h:inputText id="solto" />
 			</h:form>
+			
+			<form method="get" action="cadastropessoas.jsf">
+					Digite o código da pessoa a editar:
+					<h:inputText id="codigo" />
+					<input type="submit" value="Enviar" />
+			</form>
 		</ui:composition>
 	</h:body>
 </html>

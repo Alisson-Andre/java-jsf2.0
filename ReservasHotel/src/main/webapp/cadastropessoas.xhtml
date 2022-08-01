@@ -15,6 +15,11 @@
 				#{flash.mensagem.summary}
 			</ui:define>
 			
+			<f:metadata>
+				<f:viewParam name="codigo" value="#{cadastroPessoasBean.codigoGet}"></f:viewParam>
+				<f:event listener="#{cadastroPessoasBean.viewListener}" type="preRenderView"></f:event>
+			</f:metadata>
+			
 			<h1>Cadastro de Pessoas</h1>
 					
 			<h:form>

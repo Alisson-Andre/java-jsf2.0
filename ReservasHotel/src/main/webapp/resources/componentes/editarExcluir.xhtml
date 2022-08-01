@@ -13,14 +13,12 @@
 	
 	<composite:implementation>
 		<h:commandLink value="Editar">
-			<f:setPropertyActionListener value="#{cc.attrs.objeto}"
-				target="#{cc.attrs.alvo}" />
+			<f:setPropertyActionListener value="#{cc.attrs.objeto}" target="#{cc.attrs.alvo}" />
+			<f:param name="codigo" value="#{cc.attrs.objeto.codigo}" />
 		</h:commandLink>
 		|
-		<h:commandLink value="Excluir"
-			action="#{cc.attrs.excluirListener}">
-			<f:setPropertyActionListener value="#{cc.attrs.objeto}"
-				target="#{cc.attrs.alvo}" />
+		<h:commandLink value="Excluir" action="#{cc.attrs.excluirListener}">
+			<f:setPropertyActionListener value="#{cc.attrs.objeto}" target="#{cc.attrs.alvo}" />
 		</h:commandLink>
 	</composite:implementation>
 </html>

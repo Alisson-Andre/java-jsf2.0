@@ -11,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 
@@ -28,6 +29,7 @@ public class CadastroPessoasBean implements Serializable {
 	private Collection<Pessoa> lista;
 	private String tipoNovaPessoa;
 	private Locale locale;
+	private String codigoGet;
 	
 	public CadastroPessoasBean() {
 		locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
@@ -36,6 +38,7 @@ public class CadastroPessoasBean implements Serializable {
 		
 		for (int i = 0; i < 10; i++) {
 			Pessoa p = (i%2==0) ? new PessoaFisica() : new PessoaJuridica();
+			p.setCodigo(i + 1);
 			p.setNome(String.format("Fulano %02d", i));
 			p.setEmail(String.format("Fulano%02d@teste.com", i));
 			p.setTelefone(String.format("9999.88%02d", i));
@@ -111,6 +114,15 @@ public class CadastroPessoasBean implements Serializable {
 		this.tipoNovaPessoa = tipoNovaPessoa;
 	}
 	
+	public String getCodigoGet() {
+		return codigoGet;
+	}
+
+	public void setCodigoGet(String codigoGet) {
+		this.codigoGet = codigoGet;
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("SETOU O CODIGOGET PARA: " + codigoGet);
+	}
+
 	//Métodos getters de atributos inexistentes 
 	public Sexo[] getSexos() {
 		return Sexo.values();
@@ -130,5 +142,12 @@ public class CadastroPessoasBean implements Serializable {
 	
 	public void ouvinteAjax(ValueChangeEvent event) {
 		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AJAX VALUE CHANGE " + event.getPhaseId());
+	}
+	
+	public void viewListener(ComponentSystemEvent event) {
+		if (codigoGet != null && !codigoGet.isEmpty()) {
+			pessoaSelecionada = ((ArrayList<Pessoa>) lista).get(Integer.parseInt(codigoGet) - 1);
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ViewListener executado. Pessoa: " + pessoaSelecionada.getNome());
+		}
 	}
 }
