@@ -3,48 +3,60 @@ package beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
-import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import modelo.Pessoa;
 import modelo.PessoaFisica;
 import modelo.PessoaJuridica;
 import modelo.Sexo;
 
-@Named
-@ApplicationScoped
+@ManagedBean
+@SessionScoped
 public class CadastroPessoasBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Pessoa pessoaSelecionada;
 	private Collection<Pessoa> lista;
 	private String tipoNovaPessoa;
-	private Locale locale;
 	private String codigoGet;
 	
+	@ManagedProperty(value = "#{geralBean}")
+	private GeralBean geral;
+	
+	@PersistenceContext(unitName = "ReservasHotel")
+	private EntityManager em;
+	
 	public CadastroPessoasBean() {
-		locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-		pessoaSelecionada = new PessoaFisica();
-		lista = new ArrayList<Pessoa>();
+//		lista = new ArrayList<Pessoa>();		
+//		for (int i = 0; i < 10; i++) {
+//			Pessoa p = (i%2==0) ? new PessoaFisica() : new PessoaJuridica();
+//			p.setCodigo(i + 1);
+//			p.setNome(String.format("Fulano %02d", i));
+//			p.setEmail(String.format("Fulano%02d@teste.com", i));
+//			p.setTelefone(String.format("9999.88%02d", i));
+//			
+//			lista.add(p);
+//		}
 		
-		for (int i = 0; i < 10; i++) {
-			Pessoa p = (i%2==0) ? new PessoaFisica() : new PessoaJuridica();
-			p.setCodigo(i + 1);
-			p.setNome(String.format("Fulano %02d", i));
-			p.setEmail(String.format("Fulano%02d@teste.com", i));
-			p.setTelefone(String.format("9999.88%02d", i));
-			
-			lista.add(p);
-		}
+	}
+	
+	@PostConstruct
+	public void iniciar() {
+		lista = em.createQuery("select p from Pessoa p").getResultList();
+
 	}
 	
 	public void criar() {
@@ -84,7 +96,7 @@ public class CadastroPessoasBean implements Serializable {
 	public void excluir() {
 		lista.remove(pessoaSelecionada);
 		pessoaSelecionada = null;
-		String mensagem = ResourceBundle.getBundle("bundles.mensagens", locale).getString("excluida");
+		String mensagem = ResourceBundle.getBundle("bundles.mensagens", geral.getLocale()).getString("excluida");
 		
 		FacesContext.getCurrentInstance().addMessage(null, 
 				new FacesMessage(FacesMessage.SEVERITY_INFO, mensagem, ""));
@@ -121,6 +133,22 @@ public class CadastroPessoasBean implements Serializable {
 	public void setCodigoGet(String codigoGet) {
 		this.codigoGet = codigoGet;
 		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("SETOU O CODIGOGET PARA: " + codigoGet);
+	}
+
+	public GeralBean getGeral() {
+		return geral;
+	}
+
+	public void setGeral(GeralBean geral) {
+		this.geral = geral;
+	}
+	
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
 	}
 
 	//Métodos getters de atributos inexistentes 

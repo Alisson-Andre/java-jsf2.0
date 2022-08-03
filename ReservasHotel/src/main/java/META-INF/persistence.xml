@@ -4,13 +4,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="ReservasHotel">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/ReservasHotelDS</jta-data-source>
+	
 		<class>modelo.Diaria</class>
+		<class>modelo.DiariaAvulsa</class>
 		<class>modelo.DiariaReservada</class>
 		<class>modelo.Endereco</class>
 		<class>modelo.Pessoa</class>
 		<class>modelo.PessoaFisica</class>
 		<class>modelo.PessoaJuridica</class>
+		<class>modelo.Quarto</class>
 		<class>modelo.Reserva</class>
+		
+		<properties>
+			<property name="eclipselink.ddl-generatioin" value="create-tables"/>
+			
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+		</properties>
 		
 	</persistence-unit>
 </persistence>
