@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:composite="http://java.sun.com/jsf/composite">
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:esp="http://alisson.com.br/facelets/taglibs">
 
 	<composite:interface>
 		<composite:attribute name="objeto"/>
@@ -18,6 +19,8 @@
 		</h:commandLink>
 		|
 		<h:commandLink value="Excluir" action="#{cc.attrs.excluirListener}">
+			<esp:confirmacao/>
+			<f:attribute name="codigo" value="#{cc.attrs.objeto.codigo}" />
 			<f:setPropertyActionListener value="#{cc.attrs.objeto}" target="#{cc.attrs.alvo}" />
 		</h:commandLink>
 	</composite:implementation>
